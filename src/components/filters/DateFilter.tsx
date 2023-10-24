@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const DateFilter: React.FC = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+interface DateFilterProps {
+  selectedDate: Date | null;
+  handleDateChange: (date: Date | null) => void;
+}
 
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-  };
+const DateFilter: React.FC<DateFilterProps> = ({ selectedDate, handleDateChange }) => {
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   const handleCalendarOpen = () => {
     setIsDatePickerOpen(true);

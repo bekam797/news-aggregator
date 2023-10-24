@@ -1,6 +1,9 @@
 interface ArticleProps {
   article: {
     title: string;
+    source: any;
+    url: string;
+    urlToImage: string;
     author: string;
     date: string;
     content: string;
@@ -9,24 +12,20 @@ interface ArticleProps {
 
 const Article: React.FC<ArticleProps> = ({ article }) => {
   return (
-    <div className="bg-white rounded-lg p-6 shadow-md hover-underline-title ">
-      <a href="https://example.com" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
+    <div className="bg-white rounded-lg p-6 shadow-lg hover-underline-title ">
+      <a href={article?.url} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
         <div className="flex justify-between text-gray-500">
-          <span className="font-semibold">The New York Times</span>
+          <span className="font-semibold">{article?.source?.name}</span>
           <span>{article.date}</span>
         </div>
 
         <h1 className="text-2xl font-bold my-4 underline-on-hover">{article.title}</h1>
 
-        <img
-          src="https://via.placeholder.com/150"
-          alt="Article Image"
-          className="rounded-lg w-full h-48 object-cover my-4"
-        />
+        <img src={article.urlToImage} alt="Article Image" className="rounded-lg w-full h-48 object-cover my-4" />
 
-        <p>{article.content}</p>
+        <p className="small-text">{article.content}</p>
       </a>
-      <div className="flex justify-end">
+      <div className="flex justify-end pt-8">
         <button>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path

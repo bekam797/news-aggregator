@@ -26,3 +26,11 @@ code {
 .hover-underline-title:hover .underline-on-hover {
   text-decoration: underline;
 }
+
+.small-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

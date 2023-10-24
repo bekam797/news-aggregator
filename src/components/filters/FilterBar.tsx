@@ -1,50 +1,72 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import DateFilter from './DateFilter';
-import Filter from './Filter'; // Import the generic Filter component
+import CategoryFilter from './CategoryFilter';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { setSelectedDate, setSelectedSource, setSelectedCategory } from '../../redux/filters/filtersSlice';
+import SourceFilter from './SourceFilter';
+import { updateAxiosInstance } from '../../axios';
 
-interface FilterBarProps {
-  selectedDate?: string;
-  handleDateChange?: any;
-  selectedSource?: any;
-  handleSourceChange?: any;
-  sources?: any;
-  selectedCategory?: any;
-  handleCategoryChange?: any;
+interface Category {
+  name: string;
+}
+export interface Source {
+  name: string;
+  url: string;
+  apiKey: string;
 }
 
-const categories = [
+const categories: Category[] = [
   { name: 'U.S' },
-  { name: 'World' },
-  { name: 'Local' },
-  { name: 'Business' },
-  { name: 'Technology' },
-  { name: 'Entertainment' },
-  { name: 'Sports' },
-  { name: 'Science' },
-  { name: 'Health' },
-  { name: 'Politics' }
+  { name: 'world' },
+  { name: 'local' },
+  { name: 'business' },
+  { name: 'technology' },
+  { name: 'entertainment' },
+  { name: 'sports' },
+  { name: 'science' },
+  { name: 'health' },
+  { name: 'politics' }
 ];
 
-const sources = [{ name: 'BBC News' }, { name: 'The New York Times' }, { name: 'The Guardian' }];
+const sources = [
+  { name: 'NewsAPI', url: 'https://newsapi.org/v2/', apiKey: '3f754afa648143b9bc6fe0a532d1fd65' },
+  { name: 'NewsAGI', url: 'https://newsapi.org/v3/', apiKey: '3f754afa648143b9bc6fe0a532d1fd65' }
+];
 
-const FilterBar: React.FC<FilterBarProps> = ({
-  selectedDate,
-  handleDateChange,
-  selectedSource,
-  handleSourceChange,
-  selectedCategory,
-  handleCategoryChange
-}) => {
+const FilterBar: React.FC = () => {
+  const dispatch = useDispatch();
+  const { selectedDate, selectedSource, selectedCategory } = useSelector((state: RootState) => state.filters);
+
+  useEffect(() => {
+    if (selectedSource) {
+      updateAxiosInstance(selectedSource);
+    }
+  }, [selectedSource]);
+
+  const handleDateChange = (date: Date | null) => {
+    const dateString = date ? date.toISOString() : null;
+    dispatch(setSelectedDate(dateString));
+  };
+
+  const handleSourceChange = (source: Source) => {
+    dispatch(setSelectedSource(source));
+  };
+
+  const handleCategoryChange = (category: Category) => {
+    dispatch(setSelectedCategory(category));
+  };
+
   return (
-    <div className="flex flex-col sm:flex-row md:flex-row lg:flex-row items-start lg:items-center p-4 gap-[10px]">
+    <div className="flex flex-col sm:flex-row md:flex-row lg:flex-row items-start lg:items-center p-4 gap-[10px] border-solid border-b-[1px] border-b-[#dadce0]">
       <div className="flex gap-[10px]">
-        <Filter
+        <SourceFilter
           options={sources}
           selectedOption={selectedSource}
           handleOptionChange={handleSourceChange}
           filterType="Source"
         />
-        <Filter
+        <CategoryFilter
           options={categories}
           selectedOption={selectedCategory}
           handleOptionChange={handleCategoryChange}
@@ -52,7 +74,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
         />
       </div>
       <div className="flex items-center gap-[10px]">
-        <DateFilter />
+        <DateFilter selectedDate={selectedDate ? new Date(selectedDate) : null} handleDateChange={handleDateChange} />
       </div>
     </div>
   );

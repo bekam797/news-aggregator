@@ -3,10 +3,10 @@ import FilterBar from '../filters/FilterBar';
 
 const MainLayout: React.FC<any> = ({ children }) => {
   return (
-    <div className="">
+    <div>
       <Header />
       <FilterBar />
-      <div className="">{children}</div>
+      <div>{children}</div>
     </div>
   );
 };

@@ -1,47 +1,36 @@
 import ArticleList from '../../components/articles/ArticleList';
-
-const articles = [
-  {
-    id: 1,
-    title: 'Title 1',
-    author: 'Author 1',
-    date: '2023-10-21',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non urna vitae velit ullamcorper pulvinar.',
-    category: 'Technology',
-    source: 'NewsAPI'
-  },
-  {
-    id: 2,
-    title: 'Title 2',
-    author: 'Author 2',
-    date: '2023-10-20',
-    content: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
-    category: 'Business',
-    source: 'The Guardian'
-  },
-  {
-    id: 2,
-    title: 'Title 2',
-    author: 'Author 2',
-    date: '2023-10-20',
-    content: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
-    category: 'Business',
-    source: 'The Guardian'
-  },
-  {
-    id: 2,
-    title: 'Title 2',
-    author: 'Author 2',
-    date: '2023-10-20',
-    content: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
-    category: 'Business',
-    source: 'The Guardian'
-  }
-];
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import fetchArticles from '../../redux/thunks/fetchArticlesThunk';
+import { RootState, AppDispatch } from '../../redux/store';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const HomePage: React.FC = () => {
-  return <ArticleList articles={articles} />;
+  const dispatch = useDispatch<AppDispatch>();
+  const { data, currentPage, totalPages } = useSelector((state: RootState) => state.articles);
+  const { selectedDate, selectedCategory } = useSelector((state: RootState) => state.filters);
+
+  const fetchMoreArticles = () => {
+    dispatch(fetchArticles({ page: currentPage + 1 }));
+  };
+
+  useEffect(() => {
+    dispatch(fetchArticles({ page: 1 }));
+  }, [dispatch, selectedDate, selectedCategory]);
+
+  return (
+    <div className="max-w-screen-xl m-auto p-2">
+      <h2 className="text-md pl-4">All News</h2>
+      <InfiniteScroll
+        dataLength={data.length}
+        next={fetchMoreArticles}
+        hasMore={currentPage < totalPages}
+        loader={<h4>Loading...</h4>}
+      >
+        <ArticleList articles={data} />
+      </InfiniteScroll>
+    </div>
+  );
 };
 
 export default HomePage;

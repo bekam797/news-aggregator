@@ -2,18 +2,6 @@ import SearchBar from '../SearchBar';
 import { Link, NavLink } from 'react-router-dom';
 
 const Header = () => {
-  // const [menuOpen, setMenuOpen] = useState(false);
-  // const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
-  // const handleDateChange = (date: Date | null) => {
-  //   setSelectedDate(date);
-  // };
-  // const [selectedSource, setSelectedSource] = useState<string | null>(null);
-
-  // const handleSourceChange = (source: string) => {
-  //   setSelectedSource(source);
-  // };
-
   return (
     <header className="bg-white p-4 pb-[10px] border-solid border-b-[1px] border-b-[#dadce0]">
       <div className="mx-auto flex justify-between items-center">
