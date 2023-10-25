@@ -29,7 +29,7 @@ const fetchArticles = createAsyncThunk<Article[], FetchArticlesArgs>(
     }
 
     try {
-      const response = await updatedAxiosInstance.get('everything', { params });
+      const response = await updatedAxiosInstance.get('/everything', { params });
 
       const totalPages = Math.ceil(response.data.totalResults / params.pageSize);
       thunkAPI.dispatch(setTotalPages(totalPages));
