@@ -1,16 +1,5 @@
+import { ArticleListProps } from '../../types';
 import Article from './Article';
-
-interface ArticleListProps {
-  articles: Array<{
-    title: string;
-    author: string;
-    source: any;
-    url: string;
-    urlToImage: string;
-    date: string;
-    content: string;
-  }>;
-}
 
 const ArticleList: React.FC<ArticleListProps> = ({ articles }) => {
   return (

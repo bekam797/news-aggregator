@@ -1,17 +1,5 @@
 import React, { useState } from 'react';
-
-interface Source {
-  name: string;
-  url: string;
-  apiKey: string;
-}
-
-interface SourceFilterProps {
-  options?: Source[];
-  selectedOption?: Source | null;
-  handleOptionChange?: (option: Source) => void;
-  filterType?: string;
-}
+import { SourceFilterProps } from '../../types';
 
 const SourceFilter: React.FC<SourceFilterProps> = ({ options, selectedOption, handleOptionChange, filterType }) => {
   const [isOpen, setIsOpen] = useState(false);

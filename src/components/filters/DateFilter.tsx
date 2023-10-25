@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-interface DateFilterProps {
-  selectedDate: Date | null;
-  handleDateChange: (date: Date | null) => void;
-}
+import { DateFilterProps } from '../../types';
 
 const DateFilter: React.FC<DateFilterProps> = ({ selectedDate, handleDateChange }) => {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);

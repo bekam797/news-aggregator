@@ -5,19 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { setSelectedDate, setSelectedSource, setSelectedCategory } from '../../redux/filters/filtersSlice';
 import SourceFilter from './SourceFilter';
-import { updateAxiosInstance } from '../../axios';
-
-interface Category {
-  name: string;
-}
-export interface Source {
-  name: string;
-  url: string;
-  apiKey: string;
-}
+import { Source, updateAxiosInstance } from '../../axios';
+import { useLocation } from 'react-router-dom';
+import { Category } from '../../types';
 
 const categories: Category[] = [
-  { name: 'U.S' },
   { name: 'world' },
   { name: 'local' },
   { name: 'business' },
@@ -29,14 +21,14 @@ const categories: Category[] = [
   { name: 'politics' }
 ];
 
-const sources = [
-  { name: 'NewsAPI', url: 'https://newsapi.org/v2/', apiKey: '3f754afa648143b9bc6fe0a532d1fd65' },
-  { name: 'NewsAGI', url: 'https://newsapi.org/v3/', apiKey: '3f754afa648143b9bc6fe0a532d1fd65' }
-];
+const sources = [{ name: 'NewsAPI', url: 'https://newsapi.org/v2/', apiKey: '3f754afa648143b9bc6fe0a532d1fd65' }];
 
 const FilterBar: React.FC = () => {
   const dispatch = useDispatch();
   const { selectedDate, selectedSource, selectedCategory } = useSelector((state: RootState) => state.filters);
+  const location = useLocation();
+  const isFavoritesPage = location.pathname === '/favorites';
+  const isSearchPage = location.pathname === '/search-results';
 
   useEffect(() => {
     if (selectedSource) {
@@ -66,16 +58,20 @@ const FilterBar: React.FC = () => {
           handleOptionChange={handleSourceChange}
           filterType="Source"
         />
-        <CategoryFilter
-          options={categories}
-          selectedOption={selectedCategory}
-          handleOptionChange={handleCategoryChange}
-          filterType="Category"
-        />
+        {!isFavoritesPage && !isSearchPage && (
+          <CategoryFilter
+            options={categories}
+            selectedOption={selectedCategory}
+            handleOptionChange={handleCategoryChange}
+            filterType="Category"
+          />
+        )}
       </div>
-      <div className="flex items-center gap-[10px]">
-        <DateFilter selectedDate={selectedDate ? new Date(selectedDate) : null} handleDateChange={handleDateChange} />
-      </div>
+      {!isFavoritesPage && (
+        <div className="flex items-center gap-[10px]">
+          <DateFilter selectedDate={selectedDate ? new Date(selectedDate) : null} handleDateChange={handleDateChange} />
+        </div>
+      )}
     </div>
   );
 };

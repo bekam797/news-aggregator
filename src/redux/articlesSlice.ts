@@ -1,21 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface Article {
-  id: number;
-}
-
-interface ArticlesState {
-  data: any[];
-  currentPage: number;
-  totalPages: number;
-  loading: boolean;
-}
+import { Article, ArticlesState } from '../types';
 
 const initialState: ArticlesState = {
   data: [],
   currentPage: 1,
-  totalPages: 1,
-  loading: false
+  totalPages: 1
 };
 
 const articlesSlice = createSlice({
@@ -28,9 +17,6 @@ const articlesSlice = createSlice({
     setTotalPages(state, action: PayloadAction<number>) {
       state.totalPages = action.payload;
     },
-    setLoading(state, action: PayloadAction<boolean>) {
-      state.loading = action.payload;
-    },
     addArticles(state, action: PayloadAction<Article[]>) {
       state.data.push(...action.payload);
     },
@@ -40,5 +26,5 @@ const articlesSlice = createSlice({
   }
 });
 
-export const { incrementPage, setTotalPages, setLoading, addArticles, setArticles } = articlesSlice.actions;
+export const { incrementPage, setTotalPages, addArticles, setArticles } = articlesSlice.actions;
 export default articlesSlice.reducer;

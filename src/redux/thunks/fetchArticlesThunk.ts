@@ -2,15 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { updateAxiosInstance } from '../../axios';
 import { addArticles, setTotalPages, incrementPage, setArticles } from '../articlesSlice';
-
-interface Article {
-  id: number;
-  title: string;
-}
-
-interface FetchArticlesArgs {
-  page: number;
-}
+import { Article, FetchArticlesArgs } from '../../types';
 
 const fetchArticles = createAsyncThunk<Article[], FetchArticlesArgs>(
   'articles/fetchArticles',
@@ -20,6 +12,7 @@ const fetchArticles = createAsyncThunk<Article[], FetchArticlesArgs>(
     const updatedAxiosInstance = updateAxiosInstance(selectedSource);
 
     const params: any = { sortBy: 'popularity', page, pageSize: 10 };
+
     if (selectedDate) {
       const localDate = new Date(selectedDate);
       const offset = localDate.getTimezoneOffset();
@@ -27,12 +20,11 @@ const fetchArticles = createAsyncThunk<Article[], FetchArticlesArgs>(
       const formattedDate = adjustedDate.toISOString().split('T')[0];
 
       params.from = formattedDate;
-      params.to = formattedDate;
     }
 
     if (selectedCategory) params.q = selectedCategory.name;
 
-    if (!params.sources && !params.q && !params.domains) {
+    if (!params.q && !params.domains) {
       params.q = 'news';
     }
 

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import fetchArticles from '../../redux/thunks/fetchArticlesThunk';
 import { RootState, AppDispatch } from '../../redux/store';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { clearSearchValue } from '../../redux/filters/searchBarSlice';
 
 const HomePage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -16,11 +17,13 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchArticles({ page: 1 }));
+    dispatch(clearSearchValue());
+    localStorage.removeItem('searchValue');
   }, [dispatch, selectedDate, selectedCategory]);
 
   return (
     <div className="max-w-screen-xl m-auto p-2">
-      <h2 className="text-md pl-4">All News</h2>
+      <h2 className="text-md pl-4 text-2xl pb-10">All News</h2>
       <InfiniteScroll
         dataLength={data.length}
         next={fetchMoreArticles}

@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-
-interface Category {
-  name: string;
-}
-
-interface CategoryFilterProps {
-  options?: Category[];
-  selectedOption?: Category | null;
-  handleOptionChange?: (option: Category) => void;
-  filterType?: string;
-}
+import { CategoryFilterProps } from '../../types';
 
 const CategoryFilter: React.FC<CategoryFilterProps> = ({ options, selectedOption, handleOptionChange, filterType }) => {
   const [isOpen, setIsOpen] = useState(false);

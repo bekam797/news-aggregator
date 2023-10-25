@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const searchBarSlice = createSlice({
   name: 'searchBar',
   initialState: {
-    searchValue: ''
+    searchValue: localStorage.getItem('searchValue') ?? ''
   },
   reducers: {
     setSearchValue(state, action) {
