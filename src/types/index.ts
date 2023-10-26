@@ -48,6 +48,7 @@ export interface ArticleProps {
     title: string;
     source: any;
     url: string;
+    image?: string;
     urlToImage: string;
     author: string;
     date: string;
@@ -83,6 +84,7 @@ export interface CategoryFilterProps {
 }
 
 export interface Source {
+  id: string;
   name: string;
   url: string;
   apiKey: string;

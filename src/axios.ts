@@ -1,19 +1,23 @@
 import axios from 'axios';
 
 export interface Source {
+  id: string;
   name: string;
   url: string;
   apiKey: string;
 }
 
 export const updateAxiosInstance = (source: Source) => {
-  console.log(process.env.REACT_APP_NEWS_API_KEY, 'process.env.NEWS_API_KEY');
+  const headers = {
+    Authorization: `Bearer ${source.apiKey}`,
+    'X-Api-Key': source.apiKey
+  };
+
+  const baseURL = `http://localhost:4000/${source.id}`;
   const updatedInstance = axios.create({
-    baseURL: source.url,
-    timeout: 1000,
-    headers: {
-      'X-Api-Key': process.env.REACT_APP_NEWS_API_KEY
-    }
+    baseURL,
+    timeout: 2000,
+    headers
   });
   return updatedInstance;
 };

@@ -21,7 +21,15 @@ const categories: Category[] = [
   { name: 'politics' }
 ];
 
-const sources = [{ name: 'NewsAPI', url: 'https://newsapi.org/v2/', apiKey: '3f754afa648143b9bc6fe0a532d1fd65' }];
+const sources = [
+  { id: 'newsapi', name: 'NewsAPI', url: 'https://newsapi.org/v2/', apiKey: '3f754afa648143b9bc6fe0a532d1fd65' },
+  {
+    id: 'gnewsapi',
+    name: 'GnewsAPI',
+    url: 'https://gnews.io/api/v4/',
+    apiKey: '9bbe15fae4806b389305807ab5f09dcc'
+  }
+];
 
 const FilterBar: React.FC = () => {
   const dispatch = useDispatch();

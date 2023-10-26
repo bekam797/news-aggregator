@@ -25,7 +25,11 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
 
         <h1 className="text-2xl font-bold my-4 underline-on-hover">{article.title}</h1>
 
-        <img src={article.urlToImage} alt="Article Image" className="rounded-lg w-full h-48 object-cover my-4" />
+        <img
+          src={article.urlToImage ? article.urlToImage : article.image}
+          alt="Article Image"
+          className="rounded-lg w-full h-48 object-cover my-4"
+        />
 
         <p className="small-text">{article.content}</p>
       </a>

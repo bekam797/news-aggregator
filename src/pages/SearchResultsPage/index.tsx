@@ -11,7 +11,7 @@ const SearchResultsPage: React.FC = () => {
   const savedSearchValue = localStorage.getItem('searchValue');
 
   useEffect(() => {
-    if (savedSearchValue && selectedSource && selectedDate) {
+    if (savedSearchValue && selectedSource) {
       dispatch(performSearch({ query: savedSearchValue, source: selectedSource }));
     }
   }, [dispatch, savedSearchValue, selectedSource, selectedDate]);

@@ -1,0 +1,15 @@
+version: '3'
+services:
+  client:
+    build:
+      context: .
+      target: nginx-server
+    ports:
+      - "8080:80"
+
+  server:
+    build:
+      context: .
+      target: server
+    ports:
+      - "4000:4000"

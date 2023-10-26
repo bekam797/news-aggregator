@@ -1,3 +1,5 @@
+# News Aggregator
+
 ## Running with Docker
 
 1. Clone the repository:
@@ -11,12 +13,26 @@
 2. Build the Docker image:
 
    ```bash
-   docker build -t news-aggregator .
+   docker-compose up --build
 
    ```
 
-3. Run the Docker container:
+   Now, the application should be running at http://localhost:8080
+
+   ## Running without Docker
+
+1. Install the necessary dependencies:
    ```bash
-   docker run -p 8080:80 news-aggregator
+   yarn install
 
    ```
+2. Start the frontend application:
+   ```bash
+   yarn start
+   ```
+3. In a separate terminal, start the backend server:
+   ```bash
+   node server.ts
+   ```
+ 
+   Now, the application should be running at http://localhost:3000

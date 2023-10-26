@@ -9,7 +9,7 @@ import { clearSearchValue } from '../../redux/filters/searchBarSlice';
 const HomePage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { data, currentPage, totalPages } = useSelector((state: RootState) => state.articles);
-  const { selectedDate, selectedCategory } = useSelector((state: RootState) => state.filters);
+  const { selectedDate, selectedCategory, selectedSource } = useSelector((state: RootState) => state.filters);
 
   const fetchMoreArticles = () => {
     dispatch(fetchArticles({ page: currentPage + 1 }));
@@ -19,7 +19,7 @@ const HomePage: React.FC = () => {
     dispatch(fetchArticles({ page: 1 }));
     dispatch(clearSearchValue());
     localStorage.removeItem('searchValue');
-  }, [dispatch, selectedDate, selectedCategory]);
+  }, [dispatch, selectedSource, selectedDate, selectedCategory]);
 
   return (
     <div className="max-w-screen-xl m-auto p-2">

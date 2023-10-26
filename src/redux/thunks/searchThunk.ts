@@ -9,19 +9,31 @@ export const performSearch = createAsyncThunk(
     const { selectedDate }: any = (thunkAPI.getState() as RootState).filters;
 
     const axiosInstance = updateAxiosInstance(source);
-    const params: any = { sortBy: 'popularity', q: query };
+
+    let endpoint = '/everything';
+    let params: any = { sortBy: 'popularity', q: query };
+
+    if (source.id === 'gnewsapi') {
+      endpoint = '/search';
+      params = { q: query };
+    }
 
     if (selectedDate) {
       const localDate = new Date(selectedDate);
       const offset = localDate.getTimezoneOffset();
       const adjustedDate = new Date(localDate.getTime() - offset * 60 * 1000);
-      const formattedDate = adjustedDate.toISOString().split('T')[0];
 
-      params.from = formattedDate;
+      if (source.id === 'gnewsapi') {
+        const formattedDate = adjustedDate.toISOString();
+        params.from = formattedDate;
+      } else {
+        const formattedDate = adjustedDate.toISOString().split('T')[0];
+        params.from = formattedDate;
+      }
     }
 
     try {
-      const response = await axiosInstance.get('/everything', { params });
+      const response = await axiosInstance.get(endpoint, { params });
 
       return response.data.articles;
     } catch (error: any) {
